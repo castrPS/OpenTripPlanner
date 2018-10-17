@@ -1,4 +1,4 @@
-/* This file is based on code copied from project OpenSphere, see the LICENSE file for further information. */
+ /* This file is based on code copied from project OpenSphere, see the LICENSE file for further information. */
 package org.opensphere.geometry.algorithm;
 
 import java.util.ArrayList;
@@ -446,7 +446,7 @@ public class ConcaveHull {
 			Polygon concaveHull = new Polygon(lr, null, this.geomFactory);
 			return concaveHull;
 		}
-		
+		//@ ensures merge != null;
 		return merge;
 	}
 

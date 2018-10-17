@@ -56,7 +56,7 @@ public class ScenarioResource {
         }
     }
 
-    /*@POST
+    /*
     public javax.ws.rs.core.Response getScenario (
             @QueryParam("coordinates") String coordinates,
             @QueryParam("description") String description) {
