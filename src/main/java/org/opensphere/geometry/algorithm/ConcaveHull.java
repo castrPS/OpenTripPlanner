@@ -48,8 +48,8 @@ import com.vividsolutions.jts.util.UniqueCoordinateArrayFilter;
  */
 public class ConcaveHull {
 
-	private GeometryFactory geomFactory;
-	private GeometryCollection geometries;
+	private /*@ spec_public @*/ GeometryFactory geomFactory;
+	private /*@ spec_public @*/ GeometryCollection geometries;
 	private double threshold;
 	
 	public HashMap<LineSegment, Integer> segments = new HashMap<LineSegment, Integer>();
@@ -146,6 +146,8 @@ public class ConcaveHull {
 	 * 1 point, a {@link Point};
 	 * 0 points, an empty {@link GeometryCollection}.
 	 */
+	//@ requires geometries != null;
+	//@ requires geomFactory != null;
 	public Geometry getConcaveHull() {
 
 		if (this.geometries.getNumGeometries() == 0) {
@@ -167,6 +169,9 @@ public class ConcaveHull {
 	 * @return
 	 * 		the concave hull
 	 */
+	
+	//@ requires geometries != null;
+	//@ requires geomFactory != null;
 	private Geometry concaveHull() {
 		
 		// triangulation: create a DelaunayTriangulationBuilder object	
@@ -298,6 +303,7 @@ public class ConcaveHull {
 		
 		// concave hull algorithm
 		int index = 0;
+		//@ ensures index == -1;
 		while (index != -1) {
 			index = -1;
 
@@ -440,13 +446,13 @@ public class ConcaveHull {
 		LineMerger lineMerger = new LineMerger();
 		lineMerger.add(edges);
 		LineString merge = (LineString)lineMerger.getMergedLineStrings().iterator().next();
-		
+		//@ ensures merge != null;
 		if (merge.isRing()) {
 			LinearRing lr = new LinearRing(merge.getCoordinateSequence(), this.geomFactory);
 			Polygon concaveHull = new Polygon(lr, null, this.geomFactory);
 			return concaveHull;
 		}
-		//@ ensures merge != null;
+		
 		return merge;
 	}
 
