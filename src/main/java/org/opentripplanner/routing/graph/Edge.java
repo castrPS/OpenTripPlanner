@@ -170,6 +170,7 @@ public abstract class Edge implements Serializable {
      * @param locale wanted locale
      * @return Localized in specified locale name
      */
+    // @ requires locale != null;
     public abstract String getName(Locale locale);
 
     // TODO Add comments about what a "bogus name" is.
@@ -197,6 +198,7 @@ public abstract class Edge implements Serializable {
      * 
      * @return
      */
+    // @ ensures getFromVertex() != null;
     public double getAzimuth() {
         // TODO(flamholz): cache?
         return getFromVertex().azimuthTo(getToVertex());
