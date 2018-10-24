@@ -26,17 +26,20 @@ public abstract class Edge implements Serializable {
     /**
      * Generates globally unique edge IDs.
      */
-    private static final UniqueIdGenerator<Edge> idGenerator = new IncrementingIdGenerator<Edge>();
+    private /*@ spec_public @*/ static final UniqueIdGenerator<Edge> idGenerator = new IncrementingIdGenerator<Edge>();
 
     /**
      * Identifier of the edge. Negative means not set.
      */
-    private int id;
-
+    private /*@ spec_public @*/ int id;
+    
     protected Vertex fromv;
 
     protected Vertex tov;
-
+    
+    //@ requires idGenerator !=null;
+    //@ ensures id >= 0;
+    //@ ensures idGenerator !=null;
     protected Edge(Vertex v1, Vertex v2) {
         if (v1 == null || v2 == null) {
             String err = String.format("%s constructed with null vertex : %s %s", this.getClass(),
